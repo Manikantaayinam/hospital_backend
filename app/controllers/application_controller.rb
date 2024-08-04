@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
       case @decoded[:role]
       when 'Doctor'
         @current_user = Doctor.find(@decoded[:id])
-      when 'HospitalRegistration'
+      when 'management'
         @current_user = HospitalRegistration.find(@decoded[:id])
       when 'Receptionist'
         @current_user = Receptionist.find(@decoded[:id])

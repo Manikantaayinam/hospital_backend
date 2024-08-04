@@ -38,8 +38,8 @@ gem 'jwt'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 gem 'pry'
-gem 'pry-rails'
 
+gem 'rack-cors'
 
 
 
