@@ -10,7 +10,9 @@ class Doctor < ApplicationRecord
     def self.ransackable_attributes(auth_object = nil)
         ["address", "created_at", "email", "id", "id_value", "name", "password_digest", "phone_number", "plaintext_password", "role", "specialist_in", "updated_at", "profile"]
      end
-
+     def self.ransackable_associations(auth_object = nil)
+      ["hospital_registration"]
+    end
      private
 
       def store_plaintext_password
