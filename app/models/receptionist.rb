@@ -1,6 +1,8 @@
 class Receptionist < ApplicationRecord
     has_secure_password
-        before_save :store_plaintext_password
+
+    belongs_to :hospital_registration
+    before_save :store_plaintext_password
 
     EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
     validates :email, presence: true, uniqueness: true, format: { with: EMAIL_REGEX }
