@@ -12,9 +12,13 @@ class HospitalRegistration < ApplicationRecord
    
      # attr_accessor :confirmnew_password
      before_save :store_plaintext_password
-    def self.ransackable_attributes(auth_object = nil)
-        ["created_at", "email", "hos_name", "id", "id_value", "location", "password_digest", "plaintext_password", "updated_at", "role", "phone_number"]
-      end
+     def self.ransackable_associations(auth_object = nil)
+    ["doctors", "receptionists"]
+  end
+  
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "email", "hos_name", "id", "id_value", "location", "password_digest", "phone_number", "plaintext_password", "role", "updated_at"]
+  end
       private
 
       def store_plaintext_password
