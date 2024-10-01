@@ -1,30 +1,27 @@
 class DoctorsController < ApplicationController
   before_action :authorize_request
-  before_action :set_doctor, only: [:show, :update, :destroy]
+  before_action :set_doctor, only: [:show, :update, :destroy, :restore]
 
-  # List all doctors
   def index
-    @doctors = @current_user.doctors.all
+    @doctors = @current_user.doctors.with_deleted.all
     render json: @doctors, status: :ok
   end
 
-  # Create a new doctor
   def create
-    @doctor = @current_user.doctors.create(doctor_params)
+    @doctor = @current_user.doctors.build(doctor_params)
+    @doctor.status = "active"
+    @doctor.role = "Doctor"
     if @doctor.save
-      @doctor.update(role: "Doctor")
       render json: { message: "Doctor created successfully", account: @doctor }, status: :created
     else
       render json: { errors: "Failed to create doctor", errors: @doctor.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
-  # Show a specific doctor
   def show
     render json: @doctor, status: :ok
   end
 
-  # Update a doctor's information
   def update
     if @doctor.update(doctor_params)
       render json: { message: "Doctor updated successfully", account: @doctor }, status: :ok
@@ -33,13 +30,15 @@ class DoctorsController < ApplicationController
     end
   end
 
-  # Delete a doctor
   def destroy
-    if @doctor.destroy
-      render json: { message: "Doctor deleted successfully" }, status: :ok
-    else
-      render json: { errors: "Failed to delete doctor" }, status: :unprocessable_entity
-    end
+    @doctor.update(status: "inactive")
+    render json: { message: "Doctor deactivated successfully" }, status: :ok
+  end
+
+  def restore
+    @doctor.update(status: "active")
+    @doctor.restore
+    render json: { doctor: @doctor, message: 'Doctor was successfully restored.' }, status: :ok
   end
 
   private
@@ -49,7 +48,7 @@ class DoctorsController < ApplicationController
   end
 
   def set_doctor
-    @doctor = @current_user.doctors.find(params[:id])
+    @doctor = @current_user.doctors.with_deleted.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Doctor not found" }, status: :not_found
   end

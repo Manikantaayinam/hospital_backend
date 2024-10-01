@@ -1,16 +1,17 @@
 class ReceptionistsController < ApplicationController
   before_action :authorize_request
-  before_action :set_receptionist, only: [:show, :update, :destroy]
+  before_action :set_receptionist, only: [:show, :update, :destroy, :restore]
 
   def index
-    @receptionists = @current_user.receptionists.all
+    @receptionists = @current_user.receptionists.with_deleted.all
     render json: @receptionists, status: :ok
   end
 
   def create
-    @receptionist = @current_user.receptionists.create(receptionist_params)
+    @receptionist = @current_user.receptionists.build(receptionist_params)
+    @receptionist.status = "active"
+    @receptionist.role = "Receptionist"
     if @receptionist.save
-      @receptionist.update(role: "Receptionist")
       render json: { message: "Receptionist created successfully", account: @receptionist }, status: :created
     else
       render json: { errors: "Failed to create receptionist", errors: @receptionist.errors.full_messages }, status: :unprocessable_entity
@@ -30,21 +31,24 @@ class ReceptionistsController < ApplicationController
   end
 
   def destroy
-    if @receptionist.destroy
-      render json: { message: "Receptionist deleted successfully" }, status: :ok
-    else
-      render json: { errors: "Failed to delete receptionist" }, status: :unprocessable_entity
-    end
+    @receptionist.update(status: "inactive")
+    render json: { message: "Receptionist deactivated successfully" }, status: :ok
+  end
+
+  def restore
+    @receptionist.update(status: "active")
+    @receptionist.restore
+    render json: { receptionist: @receptionist, message: 'Receptionist was successfully restored.' }, status: :ok
   end
 
   private
 
   def receptionist_params
-    params.permit(:name, :email, :password, :password_confirmation, :address, :phone_number)
+    params.permit(:name, :email, :password, :password_confirmation, :address, :phone_number, :profile)
   end
 
   def set_receptionist
-    @receptionist = @current_user.receptionists.find(params[:id])
+    @receptionist = @current_user.receptionists.with_deleted.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Receptionist not found" }, status: :not_found
   end

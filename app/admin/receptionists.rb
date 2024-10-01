@@ -1,6 +1,6 @@
 ActiveAdmin.register Receptionist do
   # Permit the parameters you want to allow through ActiveAdmin
-  permit_params :name, :address, :phone_number, :role, :email, :password, :password_confirmation
+  permit_params :name, :address, :phone_number, :role, :email, :password, :password_confirmation, :profile, :status
 
   # Define the index page
   index do
@@ -11,6 +11,7 @@ ActiveAdmin.register Receptionist do
     column :phone_number
     column :role
     column :email
+    column :status
     column :password do |receptionist|
       receptionist.plaintext_password
     end
@@ -23,8 +24,10 @@ ActiveAdmin.register Receptionist do
       f.input :name
       f.input :address
       f.input :phone_number
+      f.input :profile
       f.input :email
       f.input :password
+      f.input :status
       f.input :password_confirmation
     end
     f.actions

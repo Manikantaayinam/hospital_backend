@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_01_035907) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_01_055904) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +53,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_01_035907) do
     t.datetime "updated_at", null: false
     t.text "profile"
     t.integer "hospital_registration_id"
+    t.datetime "deleted_at"
+    t.string "status"
   end
 
   create_table "hospital_registrations", force: :cascade do |t|
@@ -67,6 +69,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_01_035907) do
     t.bigint "phone_number"
   end
 
+  create_table "nurses", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.bigint "phone_number"
+    t.string "email"
+    t.string "hospital_registration_id"
+    t.text "profile"
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.string "status"
+  end
+
   create_table "receptionists", force: :cascade do |t|
     t.string "name"
     t.string "address"
@@ -78,6 +94,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_01_035907) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "hospital_registration_id"
+    t.text "profile"
+    t.datetime "deleted_at"
+    t.string "status"
   end
 
 end

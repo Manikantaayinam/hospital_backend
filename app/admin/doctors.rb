@@ -1,6 +1,6 @@
 ActiveAdmin.register Doctor do
   # Permit the parameters you want to allow through ActiveAdmin
-  permit_params :name, :address, :phone_number, :role, :email, :password, :password_confirmation, :specialist_in, :profile
+  permit_params :name, :address, :phone_number, :role, :email, :password, :password_confirmation, :specialist_in, :profile, :status
 
   # Define the index page
   index do
@@ -11,7 +11,6 @@ ActiveAdmin.register Doctor do
     column :phone_number
     column :role
     column :email
-    column :profile
     column :specialist_in
     column :password do |doctor|
       doctor.plaintext_password
@@ -28,7 +27,7 @@ ActiveAdmin.register Doctor do
       f.input :role
       f.input :email
       f.input :specialist_in
-
+      f.input :profile
       # Display password fields
       f.input :password
       f.input :password_confirmation, label: 'Confirm Password'
