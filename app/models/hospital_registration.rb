@@ -3,6 +3,7 @@ class HospitalRegistration < ApplicationRecord
     has_many :doctors
     has_many :receptionists
     has_many :nurses
+    has_many :patients
 
     has_secure_password
     EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

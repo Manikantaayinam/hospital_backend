@@ -1,9 +1,10 @@
 class NursesController < ApplicationController
   before_action :set_nurse, only: [:show, :edit, :update, :destroy, :restore]
-   before_action :authorize_request
+  before_action :authorize_request
 
   def index
-    @nurses = @current_user.nurses.with_deleted.all
+     hospital = HospitalRegistration.find_by(id: params[:hospital_registration_id])
+    @nurses = hospital.nurses.with_deleted.all
     render json: @nurses, status: :ok
   end
 
@@ -14,16 +15,24 @@ class NursesController < ApplicationController
     @nurse = Nurse.new
   end
 
-  def create
+def create
+  hospital = HospitalRegistration.find_by(id: params[:hospital_registration_id])
+
+  if hospital
+    @nurse = hospital.nurses.create(nurse_params)
+  else
     @nurse = @current_user.nurses.create(nurse_params)
-     @nurse.role = "Nurse"
-     @nurse.status = "active"
-     if @nurse.save
-      render json: { nurse: @nurse, message: 'Nurse was successfully created.' }, status: :created
-    else
-      render json: { errors: @nurse.errors.full_messages }, status: :unprocessable_entity
-    end
   end
+
+  @nurse.role = "Nurse"
+  @nurse.status = "active"
+
+  if @nurse.save
+    render json: { nurse: @nurse, message: 'Nurse was successfully created.' }, status: :created
+  else
+    render json: { errors: @nurse.errors.full_messages }, status: :unprocessable_entity
+  end
+end
 
   def edit
   end
