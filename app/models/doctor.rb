@@ -1,6 +1,8 @@
 class Doctor < ApplicationRecord
 
     belongs_to :hospital_registration
+    has_many :appointments
+
     acts_as_paranoid
     has_secure_password
     EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

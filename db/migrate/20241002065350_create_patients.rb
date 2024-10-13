@@ -10,8 +10,9 @@ class CreatePatients < ActiveRecord::Migration[7.1]
       t.bigint :phone_number
       t.string :role
       t.string :hospital_registration_id
-      t.string :paymentstatus
+      t.string :payment_status
       t.string :password_digest
+      
 
       t.timestamps
     end

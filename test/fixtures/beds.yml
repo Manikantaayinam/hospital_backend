@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bed_number: MyString
+  bed_type: MyString
+  status: MyString
+  entryDate: 2024-10-13 12:14:55
+  exitDate: 2024-10-13 12:14:55
+
+two:
+  bed_number: MyString
+  bed_type: MyString
+  status: MyString
+  entryDate: 2024-10-13 12:14:55
+  exitDate: 2024-10-13 12:14:55

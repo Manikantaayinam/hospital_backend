@@ -1,0 +1,2 @@
+module WardsAndBedsHelper
+end

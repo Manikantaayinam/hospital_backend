@@ -3,7 +3,8 @@ class DoctorsController < ApplicationController
   before_action :set_doctor, only: [:show, :update, :destroy, :restore]
 
   def index
-    @doctors = @current_user.doctors.with_deleted.all
+    hospital = HospitalRegistration.find_by(id: params[:hospital_registration_id])
+    @doctors = hospital.doctors.with_deleted.all
     render json: @doctors, status: :ok
   end
 

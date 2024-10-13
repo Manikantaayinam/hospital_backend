@@ -41,6 +41,8 @@ gem 'pry'
 gem 'pry-rails'
 gem 'rack-cors'
 gem 'paranoia'
+# Gemfile
+gem 'active_model_serializers'
 
 
 

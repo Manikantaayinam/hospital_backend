@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_02_065350) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_13_101232) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -38,6 +38,32 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_02_065350) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "appointments", force: :cascade do |t|
+    t.integer "patient_id"
+    t.text "problem"
+    t.integer "doctor_id"
+    t.string "appointment_status"
+    t.datetime "appointment_timing"
+    t.decimal "consultancy_fees"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "appointment_type"
+    t.integer "ward_id"
+    t.integer "bed_id"
+    t.string "hospital_registration_id"
+  end
+
+  create_table "beds", force: :cascade do |t|
+    t.string "bed_number"
+    t.string "bed_type"
+    t.string "status"
+    t.datetime "entryDate"
+    t.datetime "exitDate"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "ward_id"
   end
 
   create_table "doctors", force: :cascade do |t|
@@ -113,6 +139,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_02_065350) do
     t.text "profile"
     t.datetime "deleted_at"
     t.string "status"
+  end
+
+  create_table "wards", force: :cascade do |t|
+    t.integer "available_beds"
+    t.string "ward_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "hospital_registration_id"
+    t.string "ward_name"
   end
 
 end
