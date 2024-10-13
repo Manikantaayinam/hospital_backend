@@ -28,26 +28,26 @@
 hospital_registration = HospitalRegistration.find(1)
 
 # Create some Wards
-wards = [
-  { ward_number: "001", available_beds: 5, ward_name: "General Ward", hospital_registration: hospital_registration },
-  { ward_number: "002", available_beds: 10, ward_name: "ICU", hospital_registration: hospital_registration },
-  { ward_number: "003", available_beds: 8, ward_name: "Pediatrics", hospital_registration: hospital_registration }
-]
+# wards = [
+#   { ward_number: "001", available_beds: 5, ward_name: "General Ward", hospital_registration: hospital_registration },
+#   { ward_number: "002", available_beds: 10, ward_name: "ICU", hospital_registration: hospital_registration },
+#   { ward_number: "003", available_beds: 8, ward_name: "Pediatrics", hospital_registration: hospital_registration }
+# ]
 
-wards.each do |ward_attributes|
-  ward = Ward.create!(ward_attributes)
+# wards.each do |ward_attributes|
+#   ward = Ward.create!(ward_attributes)
 
-  # Create Beds associated with each Ward
-  5.times do |i|
-    Bed.create!(
-      bed_number: "#{ward.ward_number}-#{i + 1}",
-      bed_type: "Standard",
-      status: "Available",
-      entryDate: nil,
-      exitDate: nil,
-      ward: ward
-    )
-  end
-end
+#   # Create Beds associated with each Ward
+#   5.times do |i|
+#     Bed.create!(
+#       bed_number: "#{ward.ward_number}-#{i + 1}",
+#       bed_type: "Standard",
+#       status: "Available",
+#       entryDate: nil,
+#       exitDate: nil,
+#       ward: ward
+#     )
+#   end
+# end
 
 

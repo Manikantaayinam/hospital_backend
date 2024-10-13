@@ -14,7 +14,7 @@ class AppointmentsController < ApplicationController
       if @patient.save
         @appointment = Appointment.new(appointment_params)
         @appointment.patient_id = @patient.id
-        @appointment.appointment_status = "Appointment Created"
+        @appointment.appointment_status = "Accepted"
 
         if @appointment.save
           if @appointment.appointment_type == "IP"  
