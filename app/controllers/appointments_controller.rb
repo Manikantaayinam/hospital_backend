@@ -21,13 +21,17 @@ class AppointmentsController < ApplicationController
 
         if @appointment.save
           if @appointment.appointment_type == "IP"  
-            @bed = Bed.find(params[:bed_id])
 
-            if @bed.status != "occupied"
-              @bed.update(status: "occupied", entryDate: Date.today)
+            @bed = Bed.find(params[:bed_id])
+            if bed.present?
+              if bed.status != "occupied"
+                bed.update(status: "occupied", entryDate: Date.today)
+                @appointment.update(bed_id: bed.id)
+              else
+                return render json: { errors: "This bed is occupied" }, status: :unprocessable_entity
+              end
             else
-              # Render error if the bed is occupied and exit the action
-              return render json: { errors: "This bed is occupied" }, status: :unprocessable_entity
+              return render json: { errors: "Bed not found" }, status: :not_found
             end
           end
 
