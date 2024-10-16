@@ -1,3 +1,3 @@
 class PatientSerializer < ActiveModel::Serializer
-  attributes :id, :name, :dob, :gender, :bloodgroup, :address, :phone_number, :hospital_registration_id
+  attributes :id, :name, :age, :gender, :occupation, :address, :phone_number,:role, :hospital_registration_id
 end
