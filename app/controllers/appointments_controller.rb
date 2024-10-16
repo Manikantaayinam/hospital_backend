@@ -8,6 +8,9 @@ class AppointmentsController < ApplicationController
     render json: @appointments, each_serializer: AppointmentSerializer, status: :ok
   end
 
+
+
+
   def create
     @patient = Patient.new(patient_params)
 
@@ -41,7 +44,7 @@ class AppointmentsController < ApplicationController
   private
 
   def patient_params
-    params.permit(:name, :dob, :gender, :bloodgroup, :address, :phone_number, :hospital_registration_id)
+    params.permit(:name, :gender, :occupation, :age, :bloodgroup, :address, :phone_number, :hospital_registration_id)
   end
 
   def appointment_params
