@@ -24,9 +24,7 @@ ActiveAdmin.register Nurse do
     column :email
     column :status
     column :hospital_registration_id
-    column :password do |receptionist|
-      receptionist.plaintext_password
-    end
+   
     actions
   end
 end
