@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :wards_and_beds
   resources :appointments
   resources :patients
+  resources :payments
   
   post 'nurses/:id/restore', to: 'nurses#restore', as: 'restore_nurse'
   post 'receptionists/:id/restore', to: 'receptionists#restore', as: 'restore_receptionist'

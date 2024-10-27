@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_16_123528) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_27_051525) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,6 +64,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_16_123528) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "ward_id"
+    t.decimal "cost_per_day"
   end
 
   create_table "doctors", force: :cascade do |t|
@@ -123,6 +124,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_16_123528) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "age"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "patient_id"
+    t.integer "appointment_id"
+    t.decimal "total_amount"
+    t.string "payment_status"
+    t.decimal "due_amount"
+    t.decimal "paid_amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "payment_mode"
   end
 
   create_table "receptionists", force: :cascade do |t|

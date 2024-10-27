@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  patient_id: 1
+  appointment_id: 1
+  total_amount: 9.99
+  payment_status: MyString
+  due_amount: 9.99
+  paid_amount: 9.99
+
+two:
+  patient_id: 1
+  appointment_id: 1
+  total_amount: 9.99
+  payment_status: MyString
+  due_amount: 9.99
+  paid_amount: 9.99

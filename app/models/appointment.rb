@@ -3,4 +3,5 @@ class Appointment < ApplicationRecord
   	belongs_to :doctor, optional: true
   	belongs_to :hospital_registration, optional: true
   	belongs_to :bed, optional: true 
+  	has_many :payments
 end

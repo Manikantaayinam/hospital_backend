@@ -2,7 +2,10 @@
 class WardsAndBedsSerializer < ActiveModel::Serializer
   attributes :id, :ward_number, :available_beds, :ward_name
 
-  # You can also include a method to get the associated beds
+  def available_beds
+    object.beds.count
+  end
+
   def beds
     object.beds.map do |bed|
       {
@@ -11,11 +14,11 @@ class WardsAndBedsSerializer < ActiveModel::Serializer
         bed_type: bed.bed_type,
         status: bed.status,
         entry_date: bed.entryDate,
-        exit_date: bed.exitDate
+        exit_date: bed.exitDate,
+        cost_per_day: bed.cost_per_day
       }
     end
   end
 
-  # Include the beds in the serialized output
   attribute :beds
 end
