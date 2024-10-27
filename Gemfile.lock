@@ -343,6 +343,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   jwt
+  kaminari
   paranoia
   pg (~> 1.1)
   pry

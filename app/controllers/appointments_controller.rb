@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-  before_action :authorize_request 
+  # before_action :authorize_request 
 
   def index
     hospital = HospitalRegistration.find_by(id: params[:hospital_registration_id])

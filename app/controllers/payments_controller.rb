@@ -1,12 +1,25 @@
 class PaymentsController < ApplicationController
   before_action :set_payment, only: [:show, :update, :destroy]
-  before_action :authorize_request
+  # before_action :authorize_request
 
   def index
-    @payments = Payment.all
-    render json: @payments, each_serializer: PaymentSerializer, status: :ok
-  end
+    page = (params[:page].presence || 1).to_i
+    per_page = (params[:per_page].presence || 10).to_i
 
+    paginated_payments = Payment.offset((page - 1) * per_page).limit(per_page)
+    total_records = Payment.count
+    total_pages = (total_records / per_page.to_f).ceil
+
+    render json: {
+      payments: ActiveModelSerializers::SerializableResource.new(paginated_payments, each_serializer: PaymentSerializer),
+      meta: {
+        current_page: page,
+        per_page: per_page,
+        total_pages: total_pages,
+        total_records: total_records
+      }
+    }, status: :ok
+  end
   def show
     render json: @payment, serializer: PaymentSerializer, status: :ok
   end
