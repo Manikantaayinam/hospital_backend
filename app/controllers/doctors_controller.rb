@@ -11,6 +11,7 @@ class DoctorsController < ApplicationController
       doctors_query = hospital.doctors.all
       doctors_query = apply_search(doctors_query)
 
+
       total_records = doctors_query.count
       total_pages = (total_records / per_page.to_f).ceil
 

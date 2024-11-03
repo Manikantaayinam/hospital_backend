@@ -10,7 +10,6 @@ class Appointment < ApplicationRecord
   validates :consultancy_fees, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :appointment_type, inclusion: { in: %w[OP IP], message: "%{value} is not a valid type" }
 
-  # Method to return the status of the appointment
   def status
     appointment_status || "Pending"
   end

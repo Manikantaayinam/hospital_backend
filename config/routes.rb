@@ -10,8 +10,12 @@ Rails.application.routes.draw do
   resources :appointments
   resources :patients
   resources :payments
+  resources :doctor_appointments
   
   post 'nurses/:id/restore', to: 'nurses#restore', as: 'restore_nurse'
   post 'receptionists/:id/restore', to: 'receptionists#restore', as: 'restore_receptionist'
   post 'doctors/:id/restore', to: 'doctors#restore', as: 'restore_doctor'
+
+
+
 end

@@ -6,7 +6,7 @@ class ReceptionistsController < ApplicationController
     page = (params[:page].presence || 1).to_i
     per_page = (params[:per_page].presence || 10).to_i
 
-    receptionists_scope = @current_user.receptionists.with_deleted
+    receptionists_scope = @current_user.receptionists.all
 
     receptionists_scope = apply_search_filters(receptionists_scope)
 

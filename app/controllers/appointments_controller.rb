@@ -1,36 +1,36 @@
 class AppointmentsController < ApplicationController
   before_action :authorize_request 
   before_action :set_hospital, only: [:index, :create]
-  
-def index
-  hospital = HospitalRegistration.find_by(id: params[:hospital_registration_id])
 
-  if hospital.present?
-    page = (params[:page].presence || 1).to_i
-    per_page = (params[:per_page].presence || 10).to_i
+  def index
+    hospital = HospitalRegistration.find_by(id: params[:hospital_registration_id])
 
-    appointments = hospital.appointments.includes(:patient)
-    appointments = apply_search(appointments)
+    if hospital.present?
+      page = (params[:page].presence || 1).to_i
+      per_page = (params[:per_page].presence || 10).to_i
 
-    total_records = appointments.count
-    total_pages = (total_records / per_page.to_f).ceil
+      appointments = hospital.appointments.includes(:patient)
+      appointments = apply_search(appointments)
 
-    paginated_appointments = appointments.order(created_at: :desc).offset((page - 1) * per_page).limit(per_page)
+    
+      total_records = appointments.count
+      total_pages = (total_records / per_page.to_f).ceil
 
-    render json: {
-      appointments: ActiveModelSerializers::SerializableResource.new(paginated_appointments, each_serializer: AppointmentSerializer),
-      meta: {
-        current_page: page,
-        per_page: per_page,
-        total_pages: total_pages,
-        total_records: total_records
-      }
-    }, status: :ok
-  else
-    render json: { error: 'Hospital not found' }, status: :not_found
+      paginated_appointments = appointments.order(created_at: :desc).offset((page - 1) * per_page).limit(per_page)
+
+      render json: {
+        appointments: ActiveModelSerializers::SerializableResource.new(paginated_appointments, each_serializer: AppointmentSerializer),
+        meta: {
+          current_page: page,
+          per_page: per_page,
+          total_pages: total_pages,
+          total_records: total_records
+        }
+      }, status: :ok
+    else
+      render json: { error: 'Hospital not found' }, status: :not_found
+    end
   end
-end
-
 
   def create
     ActiveRecord::Base.transaction do
@@ -87,18 +87,16 @@ end
   end
 
   def apply_search(appointments)
-  return appointments unless params[:search].present?
+    return appointments unless params[:search].present?
     search_term = params[:search]
     doctor_id_condition = doctor_id_condition_for(search_term)
     appointments.where('problem ILIKE ? OR appointment_status = ? OR appointment_type = ? OR doctor_id = ?', 
                        "%#{search_term}%", search_term, search_term, doctor_id_condition)
   end
 
-
   def doctor_id_condition_for(search_term)
     Integer(search_term) rescue nil
   end
-
 
   def render_error(record)
     render json: { error: record.errors.full_messages }, status: :unprocessable_entity
