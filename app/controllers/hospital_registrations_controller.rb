@@ -1,6 +1,6 @@
 class HospitalRegistrationsController < ApplicationController
-        before_action :authorize_request, except: [:create]
-        before_action :find_hospital, except: [:create, :index]
+    before_action :authorize_request, except: [:create]
+    before_action :find_hospital, except: [:create, :index]
         
         def index
           @hospitals = HospitalRegistration.all

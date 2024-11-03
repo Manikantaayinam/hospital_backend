@@ -6,6 +6,7 @@ class HospitalRegistration < ApplicationRecord
     has_many :patients
     has_many :wards
     has_many :appointments
+    has_many :payments
 
     has_secure_password
     EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -14,7 +15,6 @@ class HospitalRegistration < ApplicationRecord
      # validates :password_confirmation, presence: true
     
    
-     # attr_accessor :confirmnew_password
      before_save :store_plaintext_password
       private
 
