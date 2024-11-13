@@ -1,6 +1,5 @@
 class PaymentsController < ApplicationController
   before_action :set_hospital, only: [:index]
-  before_action :set_payment, only: [:show, :update, :destroy]
   before_action :authorize_request
 
   def index
@@ -15,6 +14,7 @@ class PaymentsController < ApplicationController
   end
 
   def show
+    @payment = Payment.new(payment_params)
     render json: @payment, serializer: PaymentSerializer, status: :ok
   end
 
@@ -51,11 +51,7 @@ class PaymentsController < ApplicationController
     render json: { error: 'Hospital not found' }, status: :not_found unless @hospital
   end
 
-  def set_payment
-    @payment = Payment.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Payment not found' }, status: :not_found
-  end
+ 
 
   def payment_params
     params.permit(:patient_id, :appointment_id, :total_amount, :paid_amount, :payment_mode, :hospital_registration_id)
