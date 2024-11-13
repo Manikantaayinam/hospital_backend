@@ -29,6 +29,7 @@ class PaymentsController < ApplicationController
   end
 
   def update
+    @payment = Payment.find(params[:id])
     if @payment.update(payment_params)
       update_payment_status(@payment)
       render json: @payment, serializer: PaymentSerializer, status: :ok
@@ -38,6 +39,7 @@ class PaymentsController < ApplicationController
   end
 
   def destroy
+    @payment = Payment.find(params[:id])
     @payment.destroy
     render json: { message: 'Payment deleted successfully' }, status: :ok
   end
