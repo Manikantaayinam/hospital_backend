@@ -16,7 +16,7 @@ class AppointmentsController < ApplicationController
       total_records = appointments.count
       total_pages = (total_records / per_page.to_f).ceil
 
-      paginated_appointments = appointments.order(created_at: :desc).offset((page - 1) * per_page).limit(per_page)
+      paginated_appointments = appointments.order(created_at: :desc).limit(per_page)
 
       render json: {
         appointments: ActiveModelSerializers::SerializableResource.new(paginated_appointments, each_serializer: AppointmentSerializer),

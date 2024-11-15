@@ -15,7 +15,7 @@ class DoctorsController < ApplicationController
       total_records = doctors_query.count
       total_pages = (total_records / per_page.to_f).ceil
 
-      paginated_doctors = doctors_query.order(created_at: :desc).offset((page - 1) * per_page).limit(per_page)
+      paginated_doctors = doctors_query.order(created_at: :desc).limit(per_page)
 
       render json: {
         doctors: ActiveModelSerializers::SerializableResource.new(paginated_doctors, each_serializer: DoctorSerializer),

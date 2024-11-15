@@ -1,6 +1,6 @@
 class NursesController < ApplicationController
   before_action :set_nurse, only: [:show, :edit, :update, :destroy, :restore]
-   before_action :authorize_request
+  before_action :authorize_request
 
   def index
     hospital = HospitalRegistration.find_by(id: params[:hospital_registration_id])
@@ -14,9 +14,8 @@ class NursesController < ApplicationController
 
       total_records = nurses_query.count
       total_pages = (total_records / per_page.to_f).ceil
-      paginated_nurses = nurses_query
-                         .offset((page - 1) * per_page)
-                         .limit(per_page)
+      paginated_nurses = nurses_query.limit(per_page)
+
 
       render json: {
         nurses: ActiveModelSerializers::SerializableResource.new(paginated_nurses, each_serializer: NurseSerializer),

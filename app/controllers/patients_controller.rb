@@ -1,5 +1,5 @@
 class PatientsController < ApplicationController
-  before_action :authorize_request
+  # before_action :authorize_request
   before_action :set_hospital, only: [:index]
 
   def index
